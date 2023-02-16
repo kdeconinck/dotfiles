@@ -23,20 +23,29 @@
 # ==                OTHER DEALINGS IN THE SOFTWARE.
 # ======================================================================================================================
 
-# Import the modules that are required.
-Import-Module $PSScriptRoot\modules\TLS\TLS.psm1 -DisableNameChecking -Force
-Import-Module $PSScriptRoot\modules\Chocolatey\Chocolatey.psm1 -DisableNameChecking -Force
-Import-Module $PSScriptRoot\modules\Fonts\Fonts.psm1 -DisableNameChecking -Force
+<#
+    .SYNOPSIS
+        Install a single package using Chocolatey.
 
-# Install or update Chocolatey.
-Install-Or-Update-Chocolatey
+    .DESCRIPTION
+        Install a package by it's name using Chocolatey.
 
-# Install the required software using Chocolatey.
-Install-Chocolatey-Package -PackageName git
+    .PARAMETER PackageName
+        The name of the package to install.
+#>
+function Install-Chocolatey-Package {
+    param(
+        [Parameter(Mandatory = $true)]
+        [String]
+        $PackageName
+    )
 
-# Configure GIT.
-git config --global user.email "kevin.dconinck@gmail.com"
-git config --global user.name "Kevin De Coninck"
+    # Import the module to ensure that the environment can be refreshed after the package is installed.
+    Import-Module "$(Convert-Path "$((Get-Command choco).Path)\..\..")\helpers\chocolateyProfile.psm1"
 
-# Install the fonts.
-Install-Fonts -Folder "..\fonts"
+    # Install the package.
+    choco install $PackageName --confirm
+
+    # Refresh the environment.
+    refreshenv
+}

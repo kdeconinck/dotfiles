@@ -30,6 +30,7 @@
     Author = "Kevin De Coninck"
     Copyright = "(c) Kevin De Coninck. All rights reserved."
     FunctionsToExport = @(
-        "Install-Or-Update-Chocolatey"
+        "Install-Or-Update-Chocolatey",
+        "Install-Chocolatey-Package"
     )
 }
