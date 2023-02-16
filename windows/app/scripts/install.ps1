@@ -34,6 +34,7 @@ Install-Or-Update-Chocolatey
 # Install the required software using Chocolatey.
 Install-Chocolatey-Package -PackageName git
 Install-Chocolatey-Package -PackageName gh
+Install-Chocolatey-Package -PackageName vscode
 
 # Configure GIT.
 git config --global user.email "kevin.dconinck@gmail.com"
