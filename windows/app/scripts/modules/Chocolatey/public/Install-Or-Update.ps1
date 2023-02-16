@@ -23,13 +23,24 @@
 # ==                OTHER DEALINGS IN THE SOFTWARE.
 # ======================================================================================================================
 
-# Import the modules that are required.
-Import-Module $PSScriptRoot\modules\TLS\TLS.psm1 -DisableNameChecking -Force
-Import-Module $PSScriptRoot\modules\Chocolatey\Chocolatey.psm1 -DisableNameChecking -Force
-Import-Module $PSScriptRoot\modules\Fonts\Fonts.psm1 -DisableNameChecking -Force
+# Load the modules that are required.
+#Requires -Modules TLS
 
-# Install or update Chocolatey.
-Install-Or-Update-Chocolatey
+<#
+    .SYNOPSIS
+        Install or update Chocolatey.
 
-# Install the fonts.
-Install-Fonts -Folder "..\fonts"
+    .DESCRIPTION
+        If Chocolatey is NOT yet installed, it's installed, otherwise, the already installed version is updated to the
+        latest version.
+#>
+function Install-Or-Update-Chocolatey {
+    param()
+
+    if ($(Get-Command choco -ErrorAction SilentlyContinue)) {
+        choco upgrade Chocolatey
+    } Else {
+        Enable-TLS-1-Dot-2
+        Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+    }
+}

@@ -23,13 +23,18 @@
 # ==                OTHER DEALINGS IN THE SOFTWARE.
 # ======================================================================================================================
 
-# Import the modules that are required.
-Import-Module $PSScriptRoot\modules\TLS\TLS.psm1 -DisableNameChecking -Force
-Import-Module $PSScriptRoot\modules\Chocolatey\Chocolatey.psm1 -DisableNameChecking -Force
-Import-Module $PSScriptRoot\modules\Fonts\Fonts.psm1 -DisableNameChecking -Force
+# Import the namespaces that are required.
+using namespace System.Net
 
-# Install or update Chocolatey.
-Install-Or-Update-Chocolatey
+<#
+    .SYNOPSIS
+        Enable TLS version 1.2.
 
-# Install the fonts.
-Install-Fonts -Folder "..\fonts"
+    .DESCRIPTION
+        Enable TLS version 1.2.
+#>
+function Enable-TLS-1-Dot-2 {
+    param()
+
+    [ServicePointManager]::SecurityProtocol = [ServicePointManager]::SecurityProtocol -bor 3072
+}

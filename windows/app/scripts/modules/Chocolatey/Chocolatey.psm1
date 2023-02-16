@@ -23,13 +23,14 @@
 # ==                OTHER DEALINGS IN THE SOFTWARE.
 # ======================================================================================================================
 
-# Import the modules that are required.
-Import-Module $PSScriptRoot\modules\TLS\TLS.psm1 -DisableNameChecking -Force
-Import-Module $PSScriptRoot\modules\Chocolatey\Chocolatey.psm1 -DisableNameChecking -Force
-Import-Module $PSScriptRoot\modules\Fonts\Fonts.psm1 -DisableNameChecking -Force
+# Load all the files that contains the functions.
+$PSScriptPath = Split-Path $MyInvocation.MyCommand.Path
 
-# Install or update Chocolatey.
-Install-Or-Update-Chocolatey
+# Load the "public" and the "private" functions.
+$publicFunctions = @(Get-ChildItem -Path "$PSScriptPath\public" -Filter *.ps1 -Recurse)
+$privateFunctions = @(Get-ChildItem -Path "$PSScriptPath\private" -Filter *.ps1 -Recurse)
 
-# Install the fonts.
-Install-Fonts -Folder "..\fonts"
+# Dot source each function.
+foreach ($function in $($publicFunctions + $privateFunctions)) {
+    . $function.FullName
+}

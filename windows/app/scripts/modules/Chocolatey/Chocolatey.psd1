@@ -23,13 +23,13 @@
 # ==                OTHER DEALINGS IN THE SOFTWARE.
 # ======================================================================================================================
 
-# Import the modules that are required.
-Import-Module $PSScriptRoot\modules\TLS\TLS.psm1 -DisableNameChecking -Force
-Import-Module $PSScriptRoot\modules\Chocolatey\Chocolatey.psm1 -DisableNameChecking -Force
-Import-Module $PSScriptRoot\modules\Fonts\Fonts.psm1 -DisableNameChecking -Force
-
-# Install or update Chocolatey.
-Install-Or-Update-Chocolatey
-
-# Install the fonts.
-Install-Fonts -Folder "..\fonts"
+# Module manifest for the "Chocolatey" module.
+@{
+    ModuleVersion = "1.0.0"
+    RootModule = "Chocolatey"
+    Author = "Kevin De Coninck"
+    Copyright = "(c) Kevin De Coninck. All rights reserved."
+    FunctionsToExport = @(
+        "Install-Or-Update-Chocolatey"
+    )
+}

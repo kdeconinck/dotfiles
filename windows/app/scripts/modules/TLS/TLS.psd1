@@ -23,13 +23,13 @@
 # ==                OTHER DEALINGS IN THE SOFTWARE.
 # ======================================================================================================================
 
-# Import the modules that are required.
-Import-Module $PSScriptRoot\modules\TLS\TLS.psm1 -DisableNameChecking -Force
-Import-Module $PSScriptRoot\modules\Chocolatey\Chocolatey.psm1 -DisableNameChecking -Force
-Import-Module $PSScriptRoot\modules\Fonts\Fonts.psm1 -DisableNameChecking -Force
-
-# Install or update Chocolatey.
-Install-Or-Update-Chocolatey
-
-# Install the fonts.
-Install-Fonts -Folder "..\fonts"
+# Module manifest for the "TLS" module.
+@{
+    ModuleVersion = "1.0.0"
+    RootModule = "TLS"
+    Author = "Kevin De Coninck"
+    Copyright = "(c) Kevin De Coninck. All rights reserved."
+    FunctionsToExport = @(
+        "Enable-TLS-1-Dot-2"
+    )
+}
