@@ -37,6 +37,7 @@ Install-Chocolatey-Package -PackageName gh
 Install-Chocolatey-Package -PackageName vscode
 Install-Chocolatey-Package -PackageName dotnet-sdk
 Install-Chocolatey-Package -PackageName golang
+Install-Chocolatey-Package -PackageName googlechrome -NoChecksum
 
 # Configure GIT.
 git config --global user.email "kevin.dconinck@gmail.com"

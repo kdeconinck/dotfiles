@@ -32,19 +32,29 @@
 
     .PARAMETER PackageName
         The name of the package to install.
+
+    .PARAMETER -NoChecksum
+        A boolean flag that disables checksum validation of the package if it's provided.
 #>
 function Install-Chocolatey-Package {
     param(
         [Parameter(Mandatory = $true)]
         [String]
-        $PackageName
+        $PackageName,
+
+        [Switch]
+        $NoChecksum
     )
 
     # Import the module to ensure that the environment can be refreshed after the package is installed.
     Import-Module "$(Convert-Path "$((Get-Command choco).Path)\..\..")\helpers\chocolateyProfile.psm1"
 
     # Install the package.
-    choco install $PackageName --confirm
+    If ($NoChecksum) {
+        choco install $PackageName --confirm --ignore-checksums
+    } Else {
+        choco install $PackageName --confirm
+    }
 
     # Refresh the environment.
     refreshenv
