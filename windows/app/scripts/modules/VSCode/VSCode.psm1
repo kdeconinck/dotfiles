@@ -23,35 +23,14 @@
 # ==                OTHER DEALINGS IN THE SOFTWARE.
 # ======================================================================================================================
 
-# Import the modules that are required.
-Import-Module $PSScriptRoot\modules\TLS\TLS.psm1 -DisableNameChecking -Force
-Import-Module $PSScriptRoot\modules\Chocolatey\Chocolatey.psm1 -DisableNameChecking -Force
-Import-Module $PSScriptRoot\modules\Fonts\Fonts.psm1 -DisableNameChecking -Force
-Import-Module $PSScriptRoot\modules\VSCode\VSCode.psm1 -DisableNameChecking -Force
+# Load all the files that contains the functions.
+$PSScriptPath = Split-Path $MyInvocation.MyCommand.Path
 
-# Install or update Chocolatey.
-Install-Or-Update-Chocolatey
+# Load the "public" and the "private" functions.
+$publicFunctions = @(Get-ChildItem -Path "$PSScriptPath\public" -Filter *.ps1 -Recurse)
+$privateFunctions = @(Get-ChildItem -Path "$PSScriptPath\private" -Filter *.ps1 -Recurse)
 
-# Install the required software using Chocolatey.
-Install-Chocolatey-Package -PackageName git
-Install-Chocolatey-Package -PackageName gh
-Install-Chocolatey-Package -PackageName vscode
-Install-Chocolatey-Package -PackageName dotnet-sdk
-Install-Chocolatey-Package -PackageName golang
-Install-Chocolatey-Package -PackageName googlechrome -NoChecksum
-
-# Configure GIT.
-git config --global user.email "kevin.dconinck@gmail.com"
-git config --global user.name "Kevin De Coninck"
-
-# Install the fonts.
-Install-Fonts -Folder "..\fonts"
-
-# Configure VS Code.
-Install-VSCode-Extension -ExtensionId EditorConfig.EditorConfig
-Install-VSCode-Extension -ExtensionId ms-vscode.powershell
-Install-VSCode-Extension -ExtensionId vscode-icons-team.vscode-icons
-Install-VSCode-Extension -ExtensionId mhutchie.git-graph
-Install-VSCode-Extension -ExtensionId usernamehw.errorlens
-Install-VSCode-Extension -ExtensionId golang.go
-Install-VSCode-Extension -ExtensionId ms-dotnettools.csharp
+# Dot source each function.
+foreach ($function in $($publicFunctions + $privateFunctions)) {
+    . $function.FullName
+}

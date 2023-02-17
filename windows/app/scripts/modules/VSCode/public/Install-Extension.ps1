@@ -23,35 +23,22 @@
 # ==                OTHER DEALINGS IN THE SOFTWARE.
 # ======================================================================================================================
 
-# Import the modules that are required.
-Import-Module $PSScriptRoot\modules\TLS\TLS.psm1 -DisableNameChecking -Force
-Import-Module $PSScriptRoot\modules\Chocolatey\Chocolatey.psm1 -DisableNameChecking -Force
-Import-Module $PSScriptRoot\modules\Fonts\Fonts.psm1 -DisableNameChecking -Force
-Import-Module $PSScriptRoot\modules\VSCode\VSCode.psm1 -DisableNameChecking -Force
+<#
+    .SYNOPSIS
+        Install a single VS Code extension.
 
-# Install or update Chocolatey.
-Install-Or-Update-Chocolatey
+    .DESCRIPTION
+        Install a VS Code extension by it's identifier.
 
-# Install the required software using Chocolatey.
-Install-Chocolatey-Package -PackageName git
-Install-Chocolatey-Package -PackageName gh
-Install-Chocolatey-Package -PackageName vscode
-Install-Chocolatey-Package -PackageName dotnet-sdk
-Install-Chocolatey-Package -PackageName golang
-Install-Chocolatey-Package -PackageName googlechrome -NoChecksum
+    .PARAMETER ExtensionId
+        The ID of the extension to install.
+#>
+function Install-VSCode-Extension {
+    param(
+        [Parameter(Mandatory = $true)]
+        [String]
+        $ExtensionId
+    )
 
-# Configure GIT.
-git config --global user.email "kevin.dconinck@gmail.com"
-git config --global user.name "Kevin De Coninck"
-
-# Install the fonts.
-Install-Fonts -Folder "..\fonts"
-
-# Configure VS Code.
-Install-VSCode-Extension -ExtensionId EditorConfig.EditorConfig
-Install-VSCode-Extension -ExtensionId ms-vscode.powershell
-Install-VSCode-Extension -ExtensionId vscode-icons-team.vscode-icons
-Install-VSCode-Extension -ExtensionId mhutchie.git-graph
-Install-VSCode-Extension -ExtensionId usernamehw.errorlens
-Install-VSCode-Extension -ExtensionId golang.go
-Install-VSCode-Extension -ExtensionId ms-dotnettools.csharp
+    code --install-extension $ExtensionId --Force
+}
