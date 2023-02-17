@@ -1,0 +1,17 @@
+{
+    "editor.fontFamily": "Comic Mono",
+    "editor.formatOnSave": true,
+    "editor.fontSize": 24,
+    "editor.letterSpacing": -2.25,
+    "editor.lineHeight": 1.25,
+    "editor.renderWhitespace": "all",
+    "editor.rulers": [
+        120
+    ],
+    "terminal.integrated.fontFamily": "ComicMono NF",
+    "terminal.integrated.fontSize": 15,
+    "terminal.integrated.lineHeight": 1.05,
+    "terminal.integrated.letterSpacing": 0,
+    "workbench.colorTheme": "Default Light+",
+    "workbench.iconTheme": "vscode-icons"
+}

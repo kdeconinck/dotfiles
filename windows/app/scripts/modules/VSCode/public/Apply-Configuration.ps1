@@ -23,14 +23,22 @@
 # ==                OTHER DEALINGS IN THE SOFTWARE.
 # ======================================================================================================================
 
-# Module manifest for the "VSCode" module.
-@{
-    ModuleVersion = "1.0.0"
-    RootModule = "VSCode"
-    Author = "Kevin De Coninck"
-    Copyright = "(c) Kevin De Coninck. All rights reserved."
-    FunctionsToExport = @(
-        "Install-VSCode-Extension",
-        "Apply-VSCode-Configuration"
+<#
+    .SYNOPSIS
+        Apply VS Code configuration.
+
+    .DESCRIPTION
+        Apply VS Code configuration from a `settings.json` file.
+
+    .PARAMETER ConfigPath
+        The path to the file containing the VS Code configuration.
+#>
+function Apply-VSCode-Configuration {
+    param(
+        [Parameter(Mandatory = $true)]
+        [String]
+        $ConfigPath
     )
+
+    Copy-Item $ConfigPath -Destination ($env:APPDATA + "\Code\user")
 }

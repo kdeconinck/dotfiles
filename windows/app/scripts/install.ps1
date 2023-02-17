@@ -55,3 +55,4 @@ Install-VSCode-Extension -ExtensionId mhutchie.git-graph
 Install-VSCode-Extension -ExtensionId usernamehw.errorlens
 Install-VSCode-Extension -ExtensionId golang.go
 Install-VSCode-Extension -ExtensionId ms-dotnettools.csharp
+Apply-VSCode-Configuration -ConfigPath "..\config\VSCode\settings.json"
